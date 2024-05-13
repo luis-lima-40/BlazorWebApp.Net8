@@ -1,0 +1,73 @@
+﻿@page "/todos/create"
+@inject BlazorApp1.Data.AppDbContext DB
+@using BlazorApp1.Models
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h4>Todo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="Todo" OnValidSubmit="AddTodo" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" />
+            <div class="mb-3">
+                <label for="creationdate" class="form-label">CreationDate:</label> 
+                <InputDate id="creationdate" @bind-Value="Todo.CreationDate" class="form-control" /> 
+                <ValidationMessage For="() => Todo.CreationDate" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="priority" class="form-label">Priority:</label> 
+                <InputNumber id="priority" @bind-Value="Todo.Priority" class="form-control" /> 
+                <ValidationMessage For="() => Todo.Priority" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="title" class="form-label">Title:</label> 
+                <InputText id="title" @bind-Value="Todo.Title" class="form-control" /> 
+                <ValidationMessage For="() => Todo.Title" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="description" class="form-label">Description:</label> 
+                <InputText id="description" @bind-Value="Todo.Description" class="form-control" /> 
+                <ValidationMessage For="() => Todo.Description" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="done" class="form-label">Done:</label> 
+                <InputCheckbox id="done" @bind-Value="Todo.Done" class="form-check-input" /> 
+                <ValidationMessage For="() => Todo.Done" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="donedate" class="form-label">DoneDate:</label> 
+                <InputDate id="donedate" @bind-Value="Todo.DoneDate" class="form-control" /> 
+                <ValidationMessage For="() => Todo.DoneDate" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="categoryid" class="form-label">CategoryId:</label> 
+                <InputNumber id="categoryid" @bind-Value="Todo.CategoryId" class="form-control" /> 
+                <ValidationMessage For="() => Todo.CategoryId" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/todos">Back to List</a>
+</div>
+
+@code {
+
+    [SupplyParameterFromForm]
+    public Todo Todo { get; set; } = new();
+
+    // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+    public async Task AddTodo()
+    {
+        DB.Todos.Add(Todo);
+        await DB.SaveChangesAsync();
+        NavigationManager.NavigateTo("/todos");
+    }
+}

@@ -1,0 +1,57 @@
+﻿@page "/todos/details"
+@inject BlazorApp1.Data.AppDbContext DB
+@using BlazorApp1.Models
+@inject NavigationManager NavigationManager
+@using Microsoft.EntityFrameworkCore
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h4>Todo</h4>
+    <hr />
+    @if (todo is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">CreationDate</dt>
+            <dd class="col-sm-10">@todo.CreationDate</dd>
+            <dt class="col-sm-2">Priority</dt>
+            <dd class="col-sm-10">@todo.Priority</dd>
+            <dt class="col-sm-2">Title</dt>
+            <dd class="col-sm-10">@todo.Title</dd>
+            <dt class="col-sm-2">Description</dt>
+            <dd class="col-sm-10">@todo.Description</dd>
+            <dt class="col-sm-2">Done</dt>
+            <dd class="col-sm-10">@todo.Done</dd>
+            <dt class="col-sm-2">DoneDate</dt>
+            <dd class="col-sm-10">@todo.DoneDate</dd>
+            <dt class="col-sm-2">CategoryId</dt>
+            <dd class="col-sm-10">@todo.CategoryId</dd>
+        </dl>
+        <div>
+            <a href="@($"/todos/edit?id={todo.Id}")">Edit</a> |
+            <a href="@($"/todos")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    Todo? todo;
+
+    [SupplyParameterFromQuery]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        todo = await DB.Todos.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (todo is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}

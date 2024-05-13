@@ -1,0 +1,116 @@
+﻿@page "/Todos/edit"
+@inject BlazorApp1.Data.AppDbContext DB
+@using BlazorApp1.Models
+@inject NavigationManager NavigationManager
+@using Microsoft.EntityFrameworkCore
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h4>Todo</h4>
+<hr />
+@if (Todo is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="Todo" OnValidSubmit="UpdateTodo" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <input type="hidden" name="Todo.Id" value="@Todo.Id" />
+                <div class="mb-3">
+                    <label for="creationdate" class="form-label">CreationDate:</label>
+                    <InputDate id="creationdate" @bind-Value="Todo.CreationDate" class="form-control" />
+                    <ValidationMessage For="() => Todo.CreationDate" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="priority" class="form-label">Priority:</label>
+                    <InputNumber id="priority" @bind-Value="Todo.Priority" class="form-control" />
+                    <ValidationMessage For="() => Todo.Priority" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title:</label>
+                    <InputText id="title" @bind-Value="Todo.Title" class="form-control" />
+                    <ValidationMessage For="() => Todo.Title" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description:</label>
+                    <InputText id="description" @bind-Value="Todo.Description" class="form-control" />
+                    <ValidationMessage For="() => Todo.Description" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="done" class="form-label">Done:</label>
+                    <InputCheckbox id="done" @bind-Value="Todo.Done" class="form-check-input" />
+                    <ValidationMessage For="() => Todo.Done" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="donedate" class="form-label">DoneDate:</label>
+                    <InputDate id="donedate" @bind-Value="Todo.DoneDate" class="form-control" />
+                    <ValidationMessage For="() => Todo.DoneDate" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="categoryid" class="form-label">CategoryId:</label>
+                    <InputNumber id="categoryid" @bind-Value="Todo.CategoryId" class="form-control" />
+                    <ValidationMessage For="() => Todo.CategoryId" class="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/todos">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    public int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    public Todo? Todo { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Todo ??= await DB.Todos.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (Todo is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see https://aka.ms/RazorPagesCRUD.
+    public async Task UpdateTodo()
+    {
+        DB.Attach(Todo!).State = EntityState.Modified;
+
+        try
+        {
+            await DB.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!TodoExists(Todo!.Id))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/todos");
+    }
+
+    bool TodoExists(int id)
+    {
+        return DB.Todos.Any(e => e.Id == id);
+    }
+}

@@ -1,0 +1,28 @@
+﻿@page "/todos"
+@using Microsoft.AspNetCore.Components.QuickGrid
+@inject BlazorApp1.Data.AppDbContext DB
+@using BlazorApp1.Models
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="todos/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="DB.Todos">
+    <PropertyColumn Property="todo => todo.CreationDate" />
+    <PropertyColumn Property="todo => todo.Priority" />
+    <PropertyColumn Property="todo => todo.Title" />
+    <PropertyColumn Property="todo => todo.Description" />
+    <PropertyColumn Property="todo => todo.Done" />
+    <PropertyColumn Property="todo => todo.DoneDate" />
+    <PropertyColumn Property="todo => todo.CategoryId" />
+
+    <TemplateColumn Context="todo">
+        <a href="@($"todos/edit?id={todo.Id}")">Edit</a> |
+        <a href="@($"todos/details?id={todo.Id}")">Details</a> |
+        <a href="@($"todos/delete?id={todo.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
