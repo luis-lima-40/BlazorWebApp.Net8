@@ -1,0 +1,22 @@
+﻿@page "/categories"
+@using Microsoft.AspNetCore.Components.QuickGrid
+@inject BlazorApp1.Data.AppDbContext DB
+@using BlazorApp1.Models
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="categories/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="DB.Categories">
+    <PropertyColumn Property="category => category.Description" />
+
+    <TemplateColumn Context="category">
+        <a href="@($"categories/edit?id={category.Id}")">Edit</a> |
+        <a href="@($"categories/details?id={category.Id}")">Details</a> |
+        <a href="@($"categories/delete?id={category.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
