@@ -3,27 +3,31 @@ using BlazorApp1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-// apos sua string de conex�o estiver criada conforme acima, va para o program.cs para configirar
-// aqui vamos adicionar um servi�o de contexto que ir�r inicializar na nossa aplica��o builder.Services.AddDbContext
-// vc vai informar qual � o tipo de contexto que no caso � o AppDbContext, na sequencia passe as configura��es que criamos no contexto
-// aqui ser� a nossa classe base e dentro do colchetes vc vai criar uma fun�o labda que pode chamar o de options
-//vc vai passar para a fun��o labda o UseSqLite, e ele pede uma configura��o que � a string de conex�o, que nos criamos dentro do arquivo Appsettings.json com o nome de Default
-// se vc tiver varias strings de conex�o 2 ou mais banco de dados, crie suas variaveis de string de cone��o e passe o par�metro para o UseSqLite
+// apos sua string de conexao estiver criada conforme acima, va para o program.cs para configirar
+// aqui vamos adicionar um servico de contexto que ira inicializar na nossa aplicacao builder.Services.AddDbContext
+// vc vai informar qual e o tipo de contexto que no caso e o AppDbContext, na sequencia passe as configuracoes que criamos no contexto
+// aqui sera a nossa classe base e dentro do colchetes vc vai criar uma funcao lambda que pode chamar o de 'options'
+// vc vai passar para a funcao lambda o UseSqLite, e ele pede uma configuracao que e a string de conexao, que nos criamos dentro do arquivo Appsettings.json com o nome de 'Default'
+// se vc tiver varias strings de conexao 2 ou mais banco de dados, crie suas variaveis de string de conecao e passe o parametro para o UseSqLite
+// builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlite(builder.Configuration.GetConnectionString("Default")));
 
-var connectionStr = builder.Configuration.GetConnectionString("Default");  //builder.Configuration.GetConnectionString pega a string de cone��o que vc criou dentro do seu appsettings.json
+var connectionStr = builder.Configuration.GetConnectionString("Default");  //builder.Configuration.GetConnectionString pega a string de conecao que vc criou dentro do seu appsettings.json
 builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlite(connectionStr));
 
-builder.Services.AddQuickGridEntityFrameworkAdapter();;
-//builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlite(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddQuickGridEntityFrameworkAdapter();
+
 //builder.Services.AddDbContext<AppDbContext>(x => x.UseInMemoryDatabase(databaseName: "app"));
 
-// Agora vamos criar os migrations, cada modifica��o no banco o migrations ir� refletir a altera��o ou cria��o no banco de dados, ele cria uma linha do tempo como vers�es do seu banco de dados, em cada vers�o uma altera��o que vc criou
+
+// Agora na pasta Components, clique com botão direito do mouse, add, New Scaffolded Item, 
+// selecione Razor Component / Razor Components using Entity Framework (Crud)
 
 
 var app = builder.Build();
