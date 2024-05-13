@@ -48,12 +48,12 @@ public class AppDbContext : DbContext //herde do DcContext do EntityFramework
 
         //HasData recebe um array do mesmo tipo de dados, ou seja vai criar uma coleção de dados do tipo categoria
         // esses objetos vão ser incluidos no banco de dados quando a tabela for criada
-        modelBuilder.Entity<Category>().HasData
-        (
-            new Category { Id = 1, Description = "Trabalho" },
-            new Category { Id = 2, Description = "Pessoal" },
-            new Category { Id = 3, Description = "Outra" }
-        );
+        //modelBuilder.Entity<Category>().HasData
+        //(
+        //    new Category { Id = 1, Description = "Trabalho" },
+        //    new Category { Id = 2, Description = "Pessoal" },
+        //    new Category { Id = 3, Description = "Outra" }
+        //);
 
 
         //ainda falando em contexto, vc precisa confirurar os arquivos appsettings.json e appsettings.Development.json

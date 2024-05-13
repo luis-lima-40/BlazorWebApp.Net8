@@ -1,13 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BlazorApp1.Enum;
+using System.ComponentModel.DataAnnotations;
 
 namespace BlazorApp1.Models;
 
-public enum TodoPriority 
-{
-    Urgent = 1,
-    Important = 2,
-    Casual = 3,
-}
+
 public class Todo
 {
     [Key] //Atrioto Key é campo de chave primaria que será criado no banco de dados
