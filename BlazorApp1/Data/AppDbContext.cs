@@ -42,9 +42,16 @@ public class AppDbContext : DbContext
     // crie uma função labda para cada property e acesse cada uma das suas propriedades e determine se é requerida, se é nulavel etc
     //modelBuilder.Entity<Todo>().Property(e => e.Title).IsRequired();
 
-    //protected override void OnModelCreating(ModelBuilder modelBuilder)
-    //{
-    //    modelBuilder.Entity<Todo>().Property(e => e.Title).IsRequired();
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Todo>().Property(e => e.Priority).HasConversion(typeof(string));
+        modelBuilder.Entity<Category>().HasData
+        (
+            new Category { Id = 1, Description = "Trabalho" },
+            new Category { Id = 2, Description = "Pessoal" },
+            new Category { Id = 3, Description = "Outra" }
+        );
+    }
     //    modelBuilder.Entity<Todo>().Property(e => e.Description).IsRequired();
     //
     //    modelBuilder.Entity<Category>().Property(e => e.Description).IsRequired();
@@ -68,7 +75,7 @@ public class AppDbContext : DbContext
     //    //dentro desse arquivo é onde vai ficar a sua string de coneção "ConnectionStrings" adicione esta linha nestes arquivos
     //
     //
-    //}
+    //
 }
 
 

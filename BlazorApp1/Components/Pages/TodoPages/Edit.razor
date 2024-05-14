@@ -29,7 +29,7 @@ else
                 </div>
                 <div class="mb-3">
                     <label for="priority" class="form-label">Priority:</label>
-                    <InputNumber id="priority" @bind-Value="Todo.Priority" class="form-control" />
+                    <InputText id="priority" @bind-Value="Todo.Priority" class="form-control" />
                     <ValidationMessage For="() => Todo.Priority" class="text-danger" />
                 </div>
                 <div class="mb-3">

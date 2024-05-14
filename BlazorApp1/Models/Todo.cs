@@ -19,7 +19,8 @@ public class Todo
 
     //public int Priority { get; set; }
     [DisplayName("Priority")]
-    public TodoPriority Priority { get; set; } = TodoPriority.Casual;
+    public string Priority { get; set; } = "Casual"; 
+    //public TodoPriority Priority { get; set; } = TodoPriority.Casual; //ver como converter enum em string para evoluir este codig
 
     [Required(ErrorMessage = "Informe o Titulo")]
     [StringLength(50, ErrorMessage = "O Titulo deve ter no máximo 50 caracteres")]
@@ -36,11 +37,12 @@ public class Todo
     public bool Done { get; set; }
 
     [DisplayName("Done Date")]
-    public DateTime? DoneDate { get; set; }
+    public DateTime? DoneDate { get; set; } = null;
+
 
     [DisplayName("Category")]
     public int CategoryId { get; set; }
+    //[Required(ErrorMessage = "Categoria Inválida")] por enquando não está associando, verificar erro
 
-    [Required(ErrorMessage = "Categoria Inválida")]
     public Category? Category { get; set; }
 }

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorApp1.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240514014342_initial")]
+    [Migration("20240514030224_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -58,8 +58,9 @@ namespace BlazorApp1.Migrations
                     b.Property<DateTime?>("DoneDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Priority")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Priority")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
                         .IsRequired()

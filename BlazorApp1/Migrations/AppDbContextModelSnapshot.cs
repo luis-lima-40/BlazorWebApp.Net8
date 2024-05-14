@@ -55,8 +55,9 @@ namespace BlazorApp1.Migrations
                     b.Property<DateTime?>("DoneDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Priority")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Priority")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
                         .IsRequired()

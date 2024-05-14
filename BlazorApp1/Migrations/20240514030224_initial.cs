@@ -31,7 +31,7 @@ namespace BlazorApp1.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     CreationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Priority = table.Column<int>(type: "INTEGER", nullable: false),
+                    Priority = table.Column<string>(type: "TEXT", nullable: false),
                     Title = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     Details = table.Column<string>(type: "TEXT", maxLength: 250, nullable: true),
                     Done = table.Column<bool>(type: "INTEGER", nullable: false),

@@ -21,7 +21,7 @@
             </div>        
             <div class="mb-3">
                 <label for="priority" class="form-label">Priority:</label> 
-                <InputNumber id="priority" @bind-Value="Todo.Priority" class="form-control" /> 
+                <InputText id="priority" @bind-Value="Todo.Priority" class="form-control" /> 
                 <ValidationMessage For="() => Todo.Priority" class="text-danger" /> 
             </div>        
             <div class="mb-3">
@@ -30,9 +30,9 @@
                 <ValidationMessage For="() => Todo.Title" class="text-danger" /> 
             </div>        
             <div class="mb-3">
-                <label for="details" class="form-label">Details:</label>
-                <InputText id="details" @bind-Value="Todo.Details" class="form-control" />
-                <ValidationMessage For="() => Todo.Details" class="text-danger" />
+                <label for="details" class="form-label">Details:</label> 
+                <InputText id="details" @bind-Value="Todo.Details" class="form-control" /> 
+                <ValidationMessage For="() => Todo.Details" class="text-danger" /> 
             </div>        
             <div class="mb-3">
                 <label for="done" class="form-label">Done:</label> 
