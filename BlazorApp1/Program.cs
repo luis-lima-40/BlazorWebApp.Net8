@@ -17,9 +17,10 @@ builder.Services.AddRazorComponents()
 // vc vai passar para a funcao lambda o UseSqLite, e ele pede uma configuracao que e a string de conexao, que nos criamos dentro do arquivo Appsettings.json com o nome de 'Default'
 // se vc tiver varias strings de conexao 2 ou mais banco de dados, crie suas variaveis de string de conecao e passe o parametro para o UseSqLite
 // builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlite(builder.Configuration.GetConnectionString("Default")));
-
-var connectionStr = builder.Configuration.GetConnectionString("Default");  //builder.Configuration.GetConnectionString pega a string de conecao que vc criou dentro do seu appsettings.json
-builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlite(connectionStr));
+//builder.Configuration.GetConnectionString pega a string de conecao que vc criou dentro do seu appsettings.json
+var connectionStr = builder.Configuration.GetConnectionString("Default") ?? throw new InvalidOperationException("Connection string 'Default' not found.");  
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(connectionStr));
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddQuickGridEntityFrameworkAdapter();
 
