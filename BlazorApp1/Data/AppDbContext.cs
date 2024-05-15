@@ -73,9 +73,7 @@ public class AppDbContext : DbContext
     //    //appsettings.json é o que vai para produção
     //    //appsettings.Development.json é o que vai ficar no servidor de desenvolviemtno
     //    //dentro desse arquivo é onde vai ficar a sua string de coneção "ConnectionStrings" adicione esta linha nestes arquivos
-    //
-    //
-    //
+
 }
 
 
